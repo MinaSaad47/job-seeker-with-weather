@@ -38,9 +38,9 @@ const RegisterPage = () => {
   const handleSubmit = (_values: z.infer<typeof ValidateRegister>) => {};
 
   return (
-    <section className="lg:p-20 p-10 h-screen w-screen bg-primary flex items-center justify-center">
-      <div className="h-full w-full bg-white rounded-3xl flex overflow-hidden">
-        <div className="lg:block hidden md:w-1/2 h-full relative">
+    <section className="p-5 lg:p-20 text-xs lg:text-sm h-screen w-screen bg-primary flex items-center justify-center">
+      <div className="h-full w-full bg-white rounded-3xl flex flex-col lg:flex-row overflow-scroll">
+        <div className="lg:block md:w-1/2 h-2/5 lg:h-full relative">
           <img
             src="https://placehold.co/400"
             className="h-full w-full object-cover"
@@ -50,7 +50,7 @@ const RegisterPage = () => {
             Register
           </div>
         </div>
-        <div className="lg:w-1/2 w-full px-10">
+        <div className="lg:w-1/2 w-full px-2 py-8 lg:py-0 lg:px-10">
           <form
             className="h-full flex flex-col items-center justify-center  gap-4"
             onSubmit={form.handleSubmit(handleSubmit)}>
@@ -61,7 +61,7 @@ const RegisterPage = () => {
               className="p-2 border-2 rounded-2xl w-full text-primary focus:border-primary outline-none hover:scale-[101%] duration-150"
             />
             {formErrors.name && (
-              <p className="text-red-400 text-sm">{formErrors.name.message}</p>
+              <p className="text-red-400 text-xs">{formErrors.name.message}</p>
             )}
             <input
               type="email"
@@ -70,7 +70,7 @@ const RegisterPage = () => {
               className="p-2 border-2 rounded-2xl w-full text-primary focus:border-primary outline-none hover:scale-[101%] duration-150"
             />
             {formErrors.email && (
-              <p className="text-red-400 text-sm">{formErrors.email.message}</p>
+              <p className="text-red-400 text-xs">{formErrors.email.message}</p>
             )}
             <div className="w-full relative">
               <input
@@ -85,7 +85,7 @@ const RegisterPage = () => {
               />
             </div>
             {formErrors.password && (
-              <p className="text-red-400 text-sm">
+              <p className="text-red-400 text-xs">
                 {formErrors.password.message}
               </p>
             )}
@@ -102,7 +102,7 @@ const RegisterPage = () => {
               />
             </div>
             {formErrors.confirmPassword && (
-              <p className="text-red-400 text-sm">
+              <p className="text-red-400 text-xs">
                 {formErrors.confirmPassword.message}
               </p>
             )}
