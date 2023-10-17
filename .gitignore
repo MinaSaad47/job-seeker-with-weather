@@ -1,0 +1,7 @@
+node_modules
+**/.env
+**/dist
+**/pnpm-lock.yaml
+
+**/firebase_service_account.config.json
+**/firebase.config.json

@@ -1,0 +1,13 @@
+{
+  "name": "cross-platform-job-seeker-web-app-with-weather-integration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm --recursive --parallel --stream run dev",
+    "build": "pnpm --recursive --parallel --stream run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

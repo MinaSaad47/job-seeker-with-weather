@@ -1,0 +1,104 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import { MdPassword } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { z } from "zod";
+
+const ValidateLogin = z.object({
+  email: z.string().email({ message: "invalid email address" }),
+  password: z
+    .string()
+    .min(8, { message: "password must at least contains 8 characters" }),
+});
+
+const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const form = useForm<z.infer<typeof ValidateLogin>>({
+    resolver: zodResolver(ValidateLogin),
+  });
+  const formErrors = form.formState.errors;
+
+  const handleSubmit = (_values: z.infer<typeof ValidateLogin>) => {};
+
+  return (
+    <section className="h-screen w-screen bg-primary flex items-center justify-center">
+      <div className="h-5/6 w-5/6 bg-white rounded-3xl flex overflow-hidden">
+        <div className="w-1/2 h-full relative">
+          <img
+            src="https://placehold.co/400"
+            className="h-full w-full object-cover"
+            alt=""
+          />
+          <div className="absolute top-5 left-5 text-6xl text-primary">
+            Login
+          </div>
+        </div>
+        <div className="w-1/2 px-10">
+          <form
+            className="h-full flex flex-col items-center justify-center  gap-4"
+            onSubmit={form.handleSubmit(handleSubmit)}>
+            <input
+              {...form.register("email")}
+              type="email"
+              placeholder="email"
+              className="p-2 border-2 rounded-2xl w-full text-primary focus:border-primary outline-none hover:scale-[101%] duration-150"
+            />
+            {formErrors.email && (
+              <p className="text-red-400 text-sm">{formErrors.email.message}</p>
+            )}
+            <div className="w-full relative">
+              <input
+                {...form.register("password")}
+                type={showPassword ? "text" : "password"}
+                placeholder="password"
+                className="p-2 border-2 rounded-2xl w-full text-primary focus:border-primary outline-none hover:scale-[101%] duration-150"
+              />
+              <MdPassword
+                className="absolute top-1/2 right-3 -translate-y-1/2 hover:cursor-pointer hover:text-gray-500 hover:scale-125 duration-150"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            </div>
+            {formErrors.password && (
+              <p className="text-red-400 text-sm">
+                {formErrors.password.message}
+              </p>
+            )}
+
+            <div className="ml-auto  hover:scale-105 duration-300">
+              <a href="/" className="text-primary hover:text-primary/80">
+                Forgot Password?
+              </a>
+            </div>
+
+            <div className="flex gap-4 w-full">
+              <button
+                type="button"
+                className="flex gap-5  w-3/5 items-center justify-center p-2 rounded-md shadow-elevation-3 hover:scale-105 duration-300">
+                <FcGoogle size={30} />
+                Sign in with Google
+              </button>
+              <button
+                type="submit"
+                className="bg-primary flex-1 text-white p-2 rounded-md hover:bg-primary/80 hover:scale-105 duration-300">
+                Login
+              </button>
+            </div>
+
+            <div className="mt-10 text-center flex gap-2">
+              <p className="text-gray-500">Don't have an account?</p>
+              <Link
+                to="/register"
+                className="text-primary hover:text-primary/80 hover:scale-105 duration-300">
+                Register
+              </Link>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default LoginPage;
