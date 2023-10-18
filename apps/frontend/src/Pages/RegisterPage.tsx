@@ -3,39 +3,37 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { MdPassword } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { z } from "zod";
-
-const ValidateRegister = z
-  .object({
-    name: z
-      .string()
-      .min(3, { message: "name must at least contains 3 characters" }),
-    email: z.string().email({ message: "invalid email address" }),
-    password: z
-      .string()
-      .min(8, { message: "password must at least contains 8 characters" }),
-    confirmPassword: z.string(),
-  })
-  .superRefine(({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        message: "passwords do not match",
-        code: "custom",
-        path: ["confirmPassword"],
-      });
-    }
-  });
+import Spinner from "../components/Spinner";
+import { useRegisterMutation } from "../store";
+import { ValidateRegister } from "../validations/auth.validation";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof ValidateRegister>>({
     resolver: zodResolver(ValidateRegister),
+    values: {
+      name: "mina saad",
+      email: "minasaad@email.com",
+      password: "12345678",
+      confirmPassword: "12345678",
+    },
   });
   const formErrors = form.formState.errors;
 
-  const handleSubmit = (_values: z.infer<typeof ValidateRegister>) => {};
+  const [register, { isLoading }] = useRegisterMutation();
+
+  const handleSubmit = async (formData: z.infer<typeof ValidateRegister>) => {
+    await register(formData).unwrap();
+    form.reset();
+    toast.success("You have successfully registered", {
+      position: "bottom-center",
+    });
+    navigate("/login", { replace: true });
+  };
 
   return (
     <section className="p-5 lg:p-20 text-xs lg:text-sm h-screen w-screen bg-primary flex items-center justify-center">
@@ -66,6 +64,7 @@ const RegisterPage = () => {
             <input
               type="email"
               placeholder="email"
+              autoComplete="email"
               {...form.register("email")}
               className="p-2 border-2 rounded-2xl w-full text-primary focus:border-primary outline-none hover:scale-[101%] duration-150"
             />
@@ -116,8 +115,13 @@ const RegisterPage = () => {
               </button>
               <button
                 type="submit"
-                className="bg-primary flex-1 text-white p-2 rounded-md hover:bg-primary/80 hover:scale-105 duration-300">
-                Register
+                disabled={isLoading}
+                className={`bg-primary flex-1 flex justify-center items-center text-white p-2 rounded-md ${
+                  isLoading
+                    ? "bg-primary/60"
+                    : "hover:bg-primary/80 hover:scale-105"
+                } duration-300`}>
+                {isLoading ? <Spinner text="Registering" /> : "Register"}
               </button>
             </div>
 

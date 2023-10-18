@@ -9,12 +9,14 @@ extendZodWithOpenApi(z);
 
 import express from "express";
 import "express-async-errors";
+import morgan from "morgan";
 
 import { Swagger } from "./configs/swagger";
 import { errorHandler } from "./middlewares/errors.middlewar";
 import { authRouter } from "./resources/auth/auth.router";
 
 const app = express();
+app.use(morgan("tiny"));
 app.use(express.json());
 
 app.use("/api/auth", authRouter);

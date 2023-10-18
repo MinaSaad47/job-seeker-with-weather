@@ -3,24 +3,31 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { MdPassword } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { z } from "zod";
-
-const ValidateLogin = z.object({
-  email: z.string().email({ message: "invalid email address" }),
-  password: z
-    .string()
-    .min(8, { message: "password must at least contains 8 characters" }),
-});
+import { useLoginMutation } from "../store";
+import { ValidateLogin } from "../validations/auth.validation";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [login, { isLoading: _a }] = useLoginMutation();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof ValidateLogin>>({
     resolver: zodResolver(ValidateLogin),
   });
   const formErrors = form.formState.errors;
 
-  const handleSubmit = (_values: z.infer<typeof ValidateLogin>) => {};
+  const handleSubmit = async (formData: z.infer<typeof ValidateLogin>) => {
+    console.log(formData);
+    const payload = await login(formData).unwrap();
+    form.reset();
+    localStorage.setItem("token", payload.data);
+    toast.success("You have successfully logged in", {
+      position: "bottom-center",
+    });
+    navigate("/", { replace: true });
+  };
 
   return (
     <section className="h-screen w-screen bg-primary flex items-center justify-center">

@@ -1,4 +1,5 @@
 import { ErrorRequestHandler } from "express";
+import _ from "lodash";
 import { ZodError } from "zod";
 
 import { FirebaseError as FirebaseAdminError } from "firebase-admin";
@@ -6,6 +7,7 @@ import { FirebaseError as FirebaseClientError } from "firebase/app";
 
 export const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
   console.error(error);
+  console.error("ERROR", { ...error });
 
   if (
     Object.keys(error).includes("codePrefix") ||
@@ -27,11 +29,16 @@ const handleFirebaseError: ErrorRequestHandler = (
   res,
   next
 ) => {
-  if (error.code === "auth/email-already-exists") {
+  if (
+    _.includes(
+      ["auth/email-already-exists", "auth/email-already-in-use"],
+      error.code
+    )
+  ) {
     return res.status(400).send({
       status: "fail",
-      code: error.code,
-      message: error.message,
+      code: "auth/email-already-exists",
+      message: "email already exists",
     });
   } else if (error.code === "auth/invalid-login-credentials") {
     return res.status(401).send({
