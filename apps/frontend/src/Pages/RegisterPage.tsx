@@ -36,7 +36,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <section className="p-5 lg:p-20 text-xs lg:text-sm h-screen w-screen bg-primary flex items-center justify-center">
+    <section className="p-5 lg:p-20 text-xs lg:text-sm h-screen w-screen bg-primary-400 flex items-center justify-center">
       <div className="h-full w-full bg-white rounded-3xl flex flex-col lg:flex-row overflow-scroll">
         <div className="lg:block md:w-1/2 h-2/5 lg:h-full relative">
           <img
@@ -119,7 +119,7 @@ const RegisterPage = () => {
                 className={`bg-primary flex-1 flex justify-center items-center text-white p-2 rounded-md ${
                   isLoading
                     ? "bg-primary/60"
-                    : "hover:bg-primary/80 hover:scale-105"
+                    : "hover:bg-primary-400 hover:scale-105"
                 } duration-300`}>
                 {isLoading ? <Spinner text="Registering" /> : "Register"}
               </button>

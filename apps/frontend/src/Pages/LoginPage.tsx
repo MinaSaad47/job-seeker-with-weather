@@ -30,9 +30,9 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="h-screen w-screen bg-primary flex items-center justify-center">
-      <div className="h-5/6 w-5/6 bg-white rounded-3xl flex overflow-hidden">
-        <div className="w-1/2 h-full relative">
+    <section className="p-5 lg:p-20 text-xs lg:text-sm h-screen w-screen bg-primary-400 flex items-center justify-center">
+      <div className="h-full w-full bg-white rounded-3xl flex flex-col lg:flex-row overflow-scroll">
+        <div className="lg:block md:w-1/2 h-2/5 lg:h-full relative">
           <img
             src="https://placehold.co/400"
             className="h-full w-full object-cover"
@@ -42,7 +42,7 @@ const LoginPage = () => {
             Login
           </div>
         </div>
-        <div className="w-1/2 px-10">
+        <div className="lg:w-1/2 w-full px-2 py-8 lg:py-0 lg:px-10">
           <form
             className="h-full flex flex-col items-center justify-center  gap-4"
             onSubmit={form.handleSubmit(handleSubmit)}>
@@ -50,7 +50,7 @@ const LoginPage = () => {
               {...form.register("email")}
               type="email"
               placeholder="email"
-              className="p-2 border-2 rounded-2xl w-full text-primary focus:border-primary outline-none hover:scale-[101%] duration-150"
+              className="p-2 border-2 rounded-2xl w-full text-primaryfocus:border-primary outline-none hover:scale-[101%] duration-150"
             />
             {formErrors.email && (
               <p className="text-red-400 text-sm">{formErrors.email.message}</p>
@@ -74,7 +74,7 @@ const LoginPage = () => {
             )}
 
             <div className="ml-auto  hover:scale-105 duration-300">
-              <a href="/" className="text-primary hover:text-primary/80">
+              <a href="/" className="text-primary hover:text-primary-400">
                 Forgot Password?
               </a>
             </div>
@@ -97,7 +97,7 @@ const LoginPage = () => {
               <p className="text-gray-500">Don't have an account?</p>
               <Link
                 to="/register"
-                className="text-primary hover:text-primary/80 hover:scale-105 duration-300">
+                className="text-primary hover:text-primary-400 hover:scale-105 duration-300">
                 Register
               </Link>
             </div>

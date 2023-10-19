@@ -14,12 +14,14 @@ import morgan from "morgan";
 import { Swagger } from "./configs/swagger";
 import { errorHandler } from "./middlewares/errors.middlewar";
 import { authRouter } from "./resources/auth/auth.router";
+import { profileRouter } from "./resources/profile/profile.router";
 
 const app = express();
 app.use(morgan("tiny"));
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
+app.use("/api/profile", profileRouter);
 app.use("/api/docs", Swagger.getRouter()); // callable function to confirm registering of swagger docs
 
 const staticDir = path.join(__dirname, "../../frontend/dist");
