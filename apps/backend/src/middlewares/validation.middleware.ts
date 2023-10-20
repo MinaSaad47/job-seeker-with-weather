@@ -7,7 +7,7 @@ type Schema = {
   query?: z.Schema;
 };
 
-export const validateRequest = (schema: Schema) => {
+export const validateMiddleware = (schema: Schema) => {
   const middleware: RequestHandler = async (req, res, next) => {
     const { body, params, query } = req;
     z.object(schema).parse({ body, params, query });

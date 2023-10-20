@@ -7,8 +7,11 @@ import serviceAccountConfig from "./firebase_service_account.config.json";
 
 FBAdmin.initializeApp({
   credential: FBAdmin.credential.cert(serviceAccountConfig as any),
+  storageBucket: firebaseConfig.storageBucket,
 });
 
 FBApp.initializeApp(firebaseConfig);
 
-export { FBAdmin, FBApp, FBAuth };
+const storageBaseUrl = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o`;
+
+export { FBAdmin, FBApp, FBAuth, storageBaseUrl };

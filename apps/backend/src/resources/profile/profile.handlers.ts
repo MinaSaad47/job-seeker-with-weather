@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
+import path from "path";
 import { z } from "zod";
-import { FBAdmin } from "../../configs/firebase";
+import { FBAdmin, storageBaseUrl } from "../../configs/firebase";
 import { ValidateProfile } from "./profile.validation";
 
 export const getProfile: RequestHandler = async (req, res) => {
@@ -36,4 +37,35 @@ export const updateOrUpdateProfile: RequestHandler<
   const doc = await profile.get();
 
   res.status(exists ? 200 : 201).json({ status: "success", data: doc.data() });
+};
+
+export const uploadCV: RequestHandler = async (req, res) => {
+  const cv = req.file!;
+
+  const destination = path.join(req.user?.uid!, cv.originalname);
+
+  await FBAdmin.storage()
+    .bucket()
+    .upload(cv.path, {
+      destination,
+      metadata: { contentType: cv.mimetype },
+      contentType: cv.mimetype,
+    });
+
+  const cvUrl = `${storageBaseUrl}/${encodeURIComponent(
+    destination
+  )}?alt=media`;
+
+  await FBAdmin.firestore().collection("users").doc(req.user!.uid).set(
+    {
+      cv: cvUrl,
+    },
+    { merge: true }
+  );
+
+  res.status(200).json({
+    status: "success",
+    message: "successfully uploaded",
+    data: cvUrl,
+  });
 };

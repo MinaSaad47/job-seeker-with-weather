@@ -18,7 +18,7 @@ const EducationDetails = () => {
   } = useFieldArray({ name: "education" });
 
   const renderEducation = education.map((_item, index) => (
-    <div className="relative w-full xl:w-1/2  p-4" key={index}>
+    <div className="h-fit relative w-full flex-grow xl:w-1/2  p-4" key={index}>
       <div className="flex flex-col border-gray-300 border-2 rounded-xl p-2">
         <h5 className="text-center">Education {index + 1}</h5>
         <TextField

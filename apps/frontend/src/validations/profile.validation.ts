@@ -22,7 +22,7 @@ export const ValidateProfile = z.object({
   ),
   education: z.array(
     z.object({
-      date: z.date(),
+      date: z.date({ coerce: true }),
       major: z
         .string()
         .min(8, { message: "major must at least contains 8 characters" }),
@@ -30,44 +30,31 @@ export const ValidateProfile = z.object({
         .string()
         .min(8, { message: "institution must at least contains 8 characters" }),
       gpa: z
-        .number()
+        .number({ coerce: true })
         .min(0.1, { message: "gpa must at least 0.1" })
         .max(4, { message: "gpa must at most 4" }),
     })
   ),
   socialLinks: z.array(
-    z.object({
-      url: z
-        .string()
-        .regex(
-          /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/,
-          { message: "invalid url" }
-        ),
-      type: z.enum([
-        "website",
-        "facebook",
-        "instagram",
-        "linkedin",
-        "twitter",
-        "github",
-      ]),
-    })
+    z
+      .string()
+      .regex(
+        /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})? /,
+        { message: "invalid url" }
+      )
   ),
   address: z.object(
     {
-      city: z
-        .string()
-        .min(3, { message: "city must at least contains 3 characters" }),
-      state: z
-        .string()
-        .min(3, { message: "state must at least contains 3 characters" }),
       country: z
-        .string()
+        .string({ required_error: "country is required" })
         .min(3, { message: "country must at least contains 3 characters" }),
-      zip: z
-        .string()
-        .min(6, { message: "zip must at least contains 6 characters" }),
+      region: z
+        .string({ required_error: "region is required" })
+        .min(3, { message: "region must at least contains 3 characters" }),
     },
-    { invalid_type_error: "invalid address" }
+    {
+      invalid_type_error: "invalid address",
+      required_error: "address is required",
+    }
   ),
 });

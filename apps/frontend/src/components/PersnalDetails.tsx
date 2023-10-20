@@ -10,7 +10,7 @@ const PersnalDetails = () => {
   } = useFormContext<z.infer<typeof ValidateProfile>>();
 
   return (
-    <div className="bg-white rounded-xl p-4 flex flex-col">
+    <div className="h-fit bg-white rounded-xl p-4 flex flex-col">
       <div className="text-xl h-14">Personal Details</div>
       <div className="flex flex-col sm:flex-row items-center gap-2">
         <img

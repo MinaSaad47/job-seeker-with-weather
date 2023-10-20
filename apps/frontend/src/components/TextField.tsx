@@ -15,7 +15,6 @@ const TextField = ({
   register,
   ...other
 }: Props) => {
-  console.log(register);
   return (
     <label className="flex flex-col gap-2">
       <span>{label}</span>

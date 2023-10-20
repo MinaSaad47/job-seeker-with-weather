@@ -11,9 +11,7 @@ import TextField from "./TextField";
 const SkillsDetails = () => {
   const [showModal, setShowModal] = useState(false);
   const [skill, setSkill] = useState("");
-  const {
-    getValues,
-  } = useFormContext<z.infer<typeof ValidateProfile>>();
+  const { getValues } = useFormContext<z.infer<typeof ValidateProfile>>();
   const {
     fields: skills,
     append: appendSkill,
@@ -42,17 +40,19 @@ const SkillsDetails = () => {
   ));
 
   return (
-    <div className="row-span-2 flex flex-col gap-10 bg-white rounded-xl p-4 h-[650px] overflow-scroll">
+    <div className="h-fit flex flex-col gap-10 bg-white rounded-xl p-4 h-[650px]">
       <div className="text-xl h-14 flex justify-between">Skills</div>
       <div className="flex flex-wrap gap-4 justify-center items-center">
         {renderSkills}
       </div>
-      <button
-        type="button"
-        onClick={() => setShowModal(true)}
-        className="bg-primary text-white rounded  hover:scale-105 hover:bg-primary-400 duration-300 p-2 flex items-center justify-center gap-2 mx-[25%]">
-        add Skill
-      </button>
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={() => setShowModal(true)}
+          className="px-10 bg-primary text-white rounded  hover:scale-105 hover:bg-primary-400 duration-300 p-2 flex items-center justify-center gap-2">
+          add Skill
+        </button>
+      </div>
       <Modal onClose={() => setShowModal(false)} open={showModal}>
         <div className="m-4 flex flex-col items-center gap-4">
           <TextField

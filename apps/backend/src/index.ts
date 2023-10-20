@@ -12,7 +12,7 @@ import "express-async-errors";
 import morgan from "morgan";
 
 import { Swagger } from "./configs/swagger";
-import { errorHandler } from "./middlewares/errors.middlewar";
+import { errorsMiddleware } from "./middlewares/errors.middlewar";
 import { authRouter } from "./resources/auth/auth.router";
 import { profileRouter } from "./resources/profile/profile.router";
 
@@ -30,7 +30,7 @@ app.get("/*", (_req, res) => {
   res.sendFile(path.join(staticDir, "index.html"));
 });
 
-app.use(errorHandler);
+app.use(errorsMiddleware);
 
 async function main() {
   app.listen(process.env.PORT, () =>

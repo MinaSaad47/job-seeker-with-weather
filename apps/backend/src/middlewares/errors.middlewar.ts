@@ -5,7 +5,12 @@ import { ZodError } from "zod";
 import { FirebaseError as FirebaseAdminError } from "firebase-admin";
 import { FirebaseError as FirebaseClientError } from "firebase/app";
 
-export const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
+export const errorsMiddleware: ErrorRequestHandler = (
+  error,
+  req,
+  res,
+  next
+) => {
   console.error(error);
   console.error("ERROR", { ...error });
 
@@ -51,6 +56,13 @@ const handleFirebaseError: ErrorRequestHandler = (
       status: "fail",
       code: "auth/invalid-token",
       message: "invalid token",
+    });
+  } else if (error.code === "auth/id-token-expired")
+  {
+    return res.status(401).send({
+      status: "fail",
+      code: "auth/expired-token",
+      message: "token has expired",
     });
   }
 };

@@ -1,12 +1,17 @@
 import { Router } from "express";
 import { Swagger } from "../../configs/swagger";
-import { requireJWT } from "../../middlewares/auth.middleware";
-import { getProfile, updateOrUpdateProfile } from "./profile.handlers";
+import { requireJWTMiddleware } from "../../middlewares/auth.middleware";
+import { uploadMiddleware } from "../../middlewares/upload.middleware";
+import {
+  getProfile,
+  updateOrUpdateProfile,
+  uploadCV,
+} from "./profile.handlers";
 import { ValidateProfile as ValidateProfileCreate } from "./profile.validation";
 
 export const profileRouter = Router();
 
-profileRouter.use(requireJWT);
+profileRouter.use(requireJWTMiddleware);
 
 Swagger.registery.registerPath({
   tags: ["Profile"],
@@ -42,3 +47,34 @@ Swagger.registery.registerPath({
   },
 });
 profileRouter.put("/", updateOrUpdateProfile);
+
+Swagger.registery.registerPath({
+  tags: ["Profile"],
+  path: "/profile/upload-cv",
+  security: [{ [Swagger.bearerAuth.name]: [] }],
+  method: "post",
+  request: {
+    body: {
+      content: {
+        "multipart/form-data": {
+          schema: {
+            type: "object",
+            required: ["cv"],
+            properties: {
+              cv: {
+                type: "string",
+                format: "binary",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "success",
+    },
+  },
+});
+profileRouter.post("/upload-cv", uploadMiddleware.single("cv"), uploadCV);

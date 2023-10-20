@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Swagger } from "../../configs/swagger";
-import { validateRequest } from "../../middlewares/validation.middleware";
+import { validateMiddleware } from "../../middlewares/validation.middleware";
 import { getSession, login, register } from "./auth.handlers";
 import { ValidateLogin, ValidateRegister } from "./auth.validation";
 
@@ -27,7 +27,7 @@ Swagger.registery.registerPath({
 });
 authRouter.post(
   "/register",
-  validateRequest({ body: ValidateRegister }),
+  validateMiddleware({ body: ValidateRegister }),
   register
 );
 
@@ -50,7 +50,7 @@ Swagger.registery.registerPath({
     },
   },
 });
-authRouter.post("/login", validateRequest({ body: ValidateLogin }), login);
+authRouter.post("/login", validateMiddleware({ body: ValidateLogin }), login);
 
 Swagger.registery.registerPath({
   tags: ["Auth"],

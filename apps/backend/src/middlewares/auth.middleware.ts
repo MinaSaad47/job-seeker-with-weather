@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { FBAdmin } from "../configs/firebase";
 
-export const requireJWT: RequestHandler = async (req, res, next) => {
+export const requireJWTMiddleware: RequestHandler = async (req, res, next) => {
   const token = req.headers.authorization?.split("Bearer ")[1];
   if (!token) {
     return res.status(401).send({

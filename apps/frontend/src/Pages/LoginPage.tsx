@@ -8,10 +8,11 @@ import { toast } from "react-toastify";
 import { z } from "zod";
 import { useLoginMutation } from "../store";
 import { ValidateLogin } from "../validations/auth.validation";
+import Spinner from "../components/Spinner";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [login, { isLoading: _a }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof ValidateLogin>>({
     resolver: zodResolver(ValidateLogin),
@@ -19,7 +20,6 @@ const LoginPage = () => {
   const formErrors = form.formState.errors;
 
   const handleSubmit = async (formData: z.infer<typeof ValidateLogin>) => {
-    console.log(formData);
     const payload = await login(formData).unwrap();
     form.reset();
     localStorage.setItem("token", payload.data);
@@ -88,8 +88,8 @@ const LoginPage = () => {
               </button>
               <button
                 type="submit"
-                className="bg-primary flex-1 text-white p-2 rounded-md hover:bg-primary/80 hover:scale-105 duration-300">
-                Login
+                className="bg-primary flex-1 text-white p-2 rounded-md hover:bg-primary/80 hover:scale-105 duration-300 flex justify-center items-center">
+                {isLoading ? <Spinner text="Signing In" /> : "Sign In"}
               </button>
             </div>
 
