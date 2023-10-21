@@ -37,7 +37,6 @@ const ProfilePage = () => {
 
   const handleSubmit = async (data: z.infer<typeof ValidateProfile>) => {
     const payload = await updateProfile(data).unwrap();
-    console.log(payload.status);
     if (payload.status === "success") {
       toast.success("You have successfully updated your profile", {
         position: "bottom-center",
@@ -68,7 +67,7 @@ const ProfilePage = () => {
       <form
         noValidate
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="text-gray-500 min-w-screen min-h-screen bg-gray-200 p-2 md:p-10 flex flex-col gap-10">
+        className="text-gray-500 min-w-screen min-h-screen bg-gray-300 p-2 md:p-10 flex flex-col gap-10">
         <div className="flex justify-between items-center">
           <h1 className="text-xl md:text-4xl">Profile Details</h1>
           <div className="flex flex-col gap-1">

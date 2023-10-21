@@ -3,7 +3,7 @@ import image from "../assets/weather-background.jpg";
 import CurrentWeather from "../components/CurrentWeather";
 import Forcast from "../components/Forcast";
 import Spinner from "../components/Spinner";
-import { WeatherModel } from "../models/weather_model";
+import { IWeather } from "../models/weather_model";
 import { useGetForecatsQuery } from "../store";
 
 const WeatherPage = () => {
@@ -25,7 +25,7 @@ const WeatherPage = () => {
     );
   }
 
-  const forcast = data.data?.list as WeatherModel[];
+  const forcast = data.data?.list as IWeather[];
 
   return (
     <div

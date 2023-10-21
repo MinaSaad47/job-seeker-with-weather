@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { CgLogOut, CgProfile } from "react-icons/cg";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { removeToken } from "../store/slices/tokenSlide";
 
 const ProfileAvatar = () => {
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login", { replace: true });
+    dispatch(removeToken());
+    // navigate("/login", { replace: true });
   };
 
   const renderMenu = menu && (

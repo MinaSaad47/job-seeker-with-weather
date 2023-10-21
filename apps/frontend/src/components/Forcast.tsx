@@ -6,7 +6,7 @@ import {
   FaWind,
 } from "react-icons/fa";
 import { GiLevelCrossing } from "react-icons/gi";
-import { WeatherModel } from "../models/weather_model";
+import {  WeatherModel } from "../models/weather_model";
 
 type Props = {
   forcast: WeatherModel[];

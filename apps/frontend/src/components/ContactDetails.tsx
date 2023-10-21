@@ -28,6 +28,8 @@ const ContactDetails = () => {
     remove: removeLink,
   } = useFieldArray({ name: "socialLinks" });
 
+  console.log(emails);
+
   const renderEmails = emails.map((_item, index) => (
     <div className="flex flex-col gap-2" key={index}>
       <div className="relative">
@@ -110,7 +112,7 @@ const ContactDetails = () => {
           <fieldset className="w-full">
             {emails.length === 0 && (
               <p className="text-center text-red-500">
-                {errors.emails?.root?.message}
+                {errors.emails?.message}
               </p>
             )}
             {renderEmails}
@@ -129,7 +131,7 @@ const ContactDetails = () => {
           <fieldset>
             {phones.length === 0 && (
               <p className="text-center text-red-500">
-                {errors.phones?.root?.message}
+                {errors.phones?.message}
               </p>
             )}
             {renderPhones}

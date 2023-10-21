@@ -4,8 +4,8 @@ const weatherApi = createApi({
   reducerPath: "weather",
   baseQuery: fetchBaseQuery({
     baseUrl: "/api/weather",
-    prepareHeaders: (headers, { getState: _ }) => {
-      const token = localStorage.getItem("token");
+    prepareHeaders: (headers, { getState }: { getState: any }) => {
+      const { token } = getState().token;
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }

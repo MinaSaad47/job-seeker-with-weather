@@ -18,9 +18,9 @@ export const errorsMiddleware: ErrorRequestHandler = (
     Object.keys(error).includes("codePrefix") ||
     error instanceof FirebaseClientError
   ) {
-    handleFirebaseError(error, req, res, next);
+    return handleFirebaseError(error, req, res, next);
   } else if (error instanceof ZodError) {
-    handleZodError(error, req, res, next);
+    return handleZodError(error, req, res, next);
   }
 
   return res
@@ -63,6 +63,13 @@ const handleFirebaseError: ErrorRequestHandler = (
       status: "fail",
       code: "auth/expired-token",
       message: "token has expired",
+    });
+  } else
+  {
+    return res.status(500).send({
+      status: "fail",
+      code: "internal",
+      message: error.message,
     });
   }
 };

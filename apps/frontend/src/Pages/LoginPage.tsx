@@ -3,14 +3,18 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { MdPassword } from "react-icons/md";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { useLoginMutation } from "../store";
-import { ValidateLogin } from "../validations/auth.validation";
 import Spinner from "../components/Spinner";
+import { loginWithGoogle } from "../services/googlelogin.service";
+import { useLoginMutation } from "../store";
+import { setToken } from "../store/slices/tokenSlide";
+import { ValidateLogin } from "../validations/auth.validation";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
@@ -20,12 +24,24 @@ const LoginPage = () => {
   const formErrors = form.formState.errors;
 
   const handleSubmit = async (formData: z.infer<typeof ValidateLogin>) => {
-    const payload = await login(formData).unwrap();
+    await login(formData).unwrap();
     form.reset();
-    localStorage.setItem("token", payload.data);
+
     toast.success("You have successfully logged in", {
       position: "bottom-center",
     });
+
+    navigate("/", { replace: true });
+  };
+
+  const handleGoogleLogin = async () => {
+    const token = await loginWithGoogle();
+    dispatch(setToken(token));
+
+    toast.success("You have successfully logged in", {
+      position: "bottom-center",
+    });
+
     navigate("/", { replace: true });
   };
 
@@ -82,6 +98,7 @@ const LoginPage = () => {
             <div className="flex gap-4 w-full">
               <button
                 type="button"
+                onClick={handleGoogleLogin}
                 className="flex gap-5  w-3/5 items-center justify-center p-2 rounded-md shadow-elevation-3 hover:scale-105 duration-300">
                 <FcGoogle size={30} />
                 Sign in with Google

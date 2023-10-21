@@ -7,8 +7,8 @@ const profileApi = createApi({
   tagTypes: ["Profile"],
   baseQuery: fetchBaseQuery({
     baseUrl: "/api/profile",
-    prepareHeaders: (headers, { getState: _ }) => {
-      const token = localStorage.getItem("token");
+    prepareHeaders: (headers, { getState }: { getState: any }) => {
+      const { token } = getState().token;
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }

@@ -4,6 +4,7 @@ import {
   ValidateLogin,
   ValidateRegister,
 } from "../../validations/auth.validation";
+import { setToken } from "../slices/tokenSlide";
 
 const authApi = createApi({
   reducerPath: "auth",
@@ -20,6 +21,10 @@ const authApi = createApi({
             method: "POST",
             body,
           };
+        },
+        onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+          const { data } = await queryFulfilled;
+          dispatch(setToken(data.data));
         },
       }),
       register: builder.mutation<any, z.infer<typeof ValidateRegister>>({

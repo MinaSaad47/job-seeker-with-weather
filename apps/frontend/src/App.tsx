@@ -41,7 +41,7 @@ function App() {
             <Layout />
           </RequireAuth>
         }>
-        <Route path="/weather" element={<WeatherPage />} />
+        <Route index element={<WeatherPage />} />
       </Route>
     </Routes>
   );
