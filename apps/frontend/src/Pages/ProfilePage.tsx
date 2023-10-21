@@ -52,8 +52,14 @@ const ProfilePage = () => {
   ) => {
     const file = data.target.files?.[0];
     if (file) {
-      const payload = await uploadCv(file);
-      console.log(payload);
+      const payload = await uploadCv(file).unwrap();
+      if (payload?.status === "success") {
+        toast.success("You have successfully uploaded your CV", {
+          position: "bottom-center",
+        });
+      } else {
+        toast.error(payload.data.message, { position: "bottom-center" });
+      }
     }
   };
 

@@ -12,6 +12,12 @@ const RequireAuth = ({ children, status = true }: Props) => {
 
   const token = localStorage.getItem("token");
 
+  console.log(
+    token && status
+      ? location.pathname.split("/").reverse()[0] + " page has token"
+      : "no token found"
+  );
+
   useEffect(() => {
     if (!token) {
       const page = location.pathname.split("/").reverse()[0];
@@ -22,7 +28,7 @@ const RequireAuth = ({ children, status = true }: Props) => {
     } else if (!status) {
       toast.info("already logged in", { position: "bottom-center" });
     }
-  }, [token]);
+  }, [token, location.pathname]);
 
   if (!token && status) {
     return <Navigate to={"/login"} state={{ from: location }} replace />;

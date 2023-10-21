@@ -47,10 +47,10 @@ export const ValidateProfile = z.object({
     {
       country: z
         .string({ required_error: "country is required" })
-        .min(3, { message: "country must at least contains 3 characters" }),
+        .min(1, { message: "country must at least contains 1 characters" }),
       region: z
         .string({ required_error: "region is required" })
-        .min(3, { message: "region must at least contains 3 characters" }),
+        .min(1, { message: "region must at least contains 1 characters" }),
     },
     {
       invalid_type_error: "invalid address",

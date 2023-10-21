@@ -19,7 +19,7 @@ const Header = () => {
   ];
 
   return (
-    <nav className="text-white sticky top-0 h-20 bg-primary flex  items-center px-4">
+    <nav className="h-full bg-primary flex  items-center px-4">
       <div></div>
       <div className="flex items-center ml-auto mr-10 gap-4">
         {pages.map((page) => (

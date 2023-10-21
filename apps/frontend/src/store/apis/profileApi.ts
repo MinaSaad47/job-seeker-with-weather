@@ -45,4 +45,4 @@ const profileApi = createApi({
   }),
 });
 
-export { profileApi };
+export default profileApi;

@@ -11,8 +11,10 @@ const Layout = () => {
   }
 
   return (
-    <div>
-      <Header />
+    <div className="w-screen h-screen flex flex-col">
+      <div className="text-white sticky top-0 h-20">
+        <Header />
+      </div>
       <Outlet />
     </div>
   );
