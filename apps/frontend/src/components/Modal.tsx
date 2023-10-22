@@ -19,7 +19,7 @@ const Modal = ({ children, open, onClose }: Props) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className={`relative bg-white rounded-xl shadow p-6 transition-all ${
+        className={`relative bg-white rounded-xl shadow p-6 transition-all max-w-[100vw] max-h-[100vh] ${
           open ? "scall-100 opacity-100" : "scale-125 opacity-0"
         }`}>
         <button
