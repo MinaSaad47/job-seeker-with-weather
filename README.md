@@ -27,6 +27,7 @@
 - Styling and Responsiveness (using [tailwind css](https://tailwindcss.com/))
 - Backend API (using [expressJS](https://expressjs.com/))
 - Database (using [firebase firestore](https://firebase.google.com/docs/firestore/))
+- [API Documentation](https://job-seeker-with-weather.onrender.com/api/docs/) (using [swagger](https://swagger.io/))
 
 ## faced challenges
 
