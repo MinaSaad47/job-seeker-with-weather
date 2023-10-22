@@ -8,6 +8,16 @@ type Props = {
   [other: string]: any;
 };
 
+/**
+ * Generates a text field component.
+ *
+ * @param {string} type - The type of the input field. Default is "text".
+ * @param {string} className - The CSS class name for the component.
+ * @param {string} label - The label text for the text field.
+ * @param {object} register - The data register object.
+ * @param {object} other - Additional props for the input field.
+ * @return {JSX.Element} The text field component.
+ */
 const TextField = ({
   type = "text",
   className,

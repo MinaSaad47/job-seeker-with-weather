@@ -8,6 +8,14 @@ type Props = {
   onChagne: (file: File) => void;
 };
 
+/**
+ * Renders an AvatarPicker component that allows the user to select and display an avatar image.
+ *
+ * @param {Props} src - The source URL of the avatar image.
+ * @param {Props} name - The name of the avatar.
+ * @param {Props} onChagne - A callback function that is called when the avatar image is changed.
+ * @return {JSX.Element} The rendered AvatarPicker component.
+ */
 const AvatarPicker = ({ src, name, onChagne }: Props) => {
   const [avatar, setAvatar] = useState(src);
 

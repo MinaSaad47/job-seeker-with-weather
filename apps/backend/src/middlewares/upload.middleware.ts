@@ -3,6 +3,10 @@ import _ from "lodash";
 import multer from "multer";
 import { InvalidMimetypeError } from "../utils/errors";
 
+/*
+ * Multer middleware for uploading files with specified mimetypes
+ * @param mimetype - array of mimetypes
+ */
 export const uploadMiddleware = (mimetype: string[]) =>
   multer({
     storage: multer.diskStorage({

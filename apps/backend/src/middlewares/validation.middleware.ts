@@ -7,6 +7,10 @@ type Schema = {
   query?: z.Schema;
 };
 
+/*
+ * Validate the request
+ * @param schema - zod schema
+ */
 export const validateMiddleware = (schema: Schema) => {
   const middleware: RequestHandler = async (req, res, next) => {
     const { body, params, query } = req;
