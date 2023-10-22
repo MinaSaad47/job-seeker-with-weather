@@ -18,14 +18,14 @@ const LocationPicker = ({ value, onChange }: Props) => {
   if (!value) {
     value = center;
   }
-  const [map, setMap] = useState(null);
+  const [map, setMap] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const markerRef = useRef(null);
 
   const eventHandlers = useMemo(
     () => ({
       dragend() {
-        const marker = markerRef.current;
+        const marker = markerRef.current as any;
         if (marker != null) {
           onChange?.(marker.getLatLng());
         }
