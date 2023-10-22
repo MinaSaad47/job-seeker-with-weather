@@ -67,7 +67,7 @@ const LocationPicker = ({ value, onChange }: Props) => {
         ref={setMap}
         center={value ?? center}
         zoom={13}
-        style={{ height: "100%", width: "100%", zIndex: 2 }}>
+        className="w-full h-full z-10">
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Marker
           draggable={true}
