@@ -20,7 +20,6 @@ export const login: RequestHandler<
 };
 
 export const getSession: RequestHandler = async (req, res) => {
-  console.log(req.headers.authorization);
   const token = req.headers.authorization?.split("Bearer ")[1];
 
   if (!token) {

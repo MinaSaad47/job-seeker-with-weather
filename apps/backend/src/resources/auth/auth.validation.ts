@@ -12,7 +12,6 @@ export const ValidateRegister = z
     email: z
       .string({ required_error: "email is required" })
       .email({ message: "invalid email" }),
-    name: z.string({ required_error: "name is required" }).min(3),
     password: z.string({ required_error: "password is required" }).min(8),
     confirmPassword: z
       .string({ required_error: "confirm password is required" })

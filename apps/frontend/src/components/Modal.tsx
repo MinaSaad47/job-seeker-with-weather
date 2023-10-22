@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { CgClose } from "react-icons/cg";
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
 };
 
 const Modal = ({ children, open, onClose }: Props) => {
-  return (
+  return ReactDOM.createPortal(
     <div
       onClick={onClose}
       className={`fixed inset-0 flex justify-center items-center transition-colors ${
@@ -29,7 +30,8 @@ const Modal = ({ children, open, onClose }: Props) => {
         </button>
         {children}
       </div>
-    </div>
+    </div>,
+    document.getElementById("portal") as any
   );
 };
 

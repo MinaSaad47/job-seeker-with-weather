@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 
 import { FirebaseError as FirebaseAdminError } from "firebase-admin";
 import { FirebaseError as FirebaseClientError } from "firebase/app";
+import { InvalidMimetypeError } from "../utils/errors";
 
 export const errorsMiddleware: ErrorRequestHandler = (
   error,
@@ -21,6 +22,12 @@ export const errorsMiddleware: ErrorRequestHandler = (
     return handleFirebaseError(error, req, res, next);
   } else if (error instanceof ZodError) {
     return handleZodError(error, req, res, next);
+  } else if (error instanceof InvalidMimetypeError) {
+    return res.status(400).send({
+      status: "fail",
+      code: "upload/invalid-mimetype",
+      message: error.message,
+    });
   }
 
   return res
@@ -57,15 +64,13 @@ const handleFirebaseError: ErrorRequestHandler = (
       code: "auth/invalid-token",
       message: "invalid token",
     });
-  } else if (error.code === "auth/id-token-expired")
-  {
+  } else if (error.code === "auth/id-token-expired") {
     return res.status(401).send({
       status: "fail",
       code: "auth/expired-token",
       message: "token has expired",
     });
-  } else
-  {
+  } else {
     return res.status(500).send({
       status: "fail",
       code: "internal",
@@ -87,7 +92,6 @@ const handleZodError: ErrorRequestHandler = (
       code: issue.code,
     };
   });
-  console.log(error);
   return res.status(400).send({
     status: "fail",
     code: "validation",

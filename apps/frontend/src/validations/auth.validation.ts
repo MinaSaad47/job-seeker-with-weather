@@ -9,9 +9,6 @@ export const ValidateLogin = z.object({
 
 export const ValidateRegister = z
   .object({
-    name: z
-      .string()
-      .min(3, { message: "name must at least contains 3 characters" }),
     email: z.string().email({ message: "invalid email address" }),
     password: z
       .string()

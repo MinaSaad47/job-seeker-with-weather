@@ -13,18 +13,14 @@ import { useRegisterMutation } from "../store";
 import { setToken } from "../store/slices/tokenSlide";
 import { ValidateRegister } from "../validations/auth.validation";
 
+import registrationBackground from "../assets/registration-background.jpg";
+
 const RegisterPage = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof ValidateRegister>>({
     resolver: zodResolver(ValidateRegister),
-    values: {
-      name: "mina saad",
-      email: "minasaad@email.com",
-      password: "12345678",
-      confirmPassword: "12345678",
-    },
   });
   const formErrors = form.formState.errors;
   const [register, { isLoading }] = useRegisterMutation();
@@ -50,15 +46,18 @@ const RegisterPage = () => {
   };
 
   return (
-    <section className="p-5 lg:p-20 text-xs lg:text-sm h-screen w-screen bg-primary-400 flex items-center justify-center">
+    <div
+      className="text-xs lg:text-sm h-screen w-screen flex items-center justify-center"
+      style={{ background: `url(${registrationBackground})` }}>
+      <div className="p-5 lg:p-20 w-full h-full backdrop-blur-3xl backdrop-brightness-75">
       <div className="h-full w-full bg-white rounded-3xl flex flex-col lg:flex-row overflow-scroll">
         <div className="lg:block md:w-1/2 h-2/5 lg:h-full relative">
           <img
-            src="https://placehold.co/400"
+            src={registrationBackground}
             className="h-full w-full object-cover"
             alt=""
           />
-          <div className="absolute top-5 left-5 text-6xl text-primary">
+          <div className="absolute top-5 left-5 text-6xl text-white">
             Register
           </div>
         </div>
@@ -66,15 +65,6 @@ const RegisterPage = () => {
           <form
             className="h-full flex flex-col items-center justify-center  gap-4"
             onSubmit={form.handleSubmit(handleSubmit)}>
-            <input
-              type="text"
-              placeholder="name"
-              {...form.register("name")}
-              className="p-2 border-2 rounded-2xl w-full text-primary focus:border-primary outline-none hover:scale-[101%] duration-150"
-            />
-            {formErrors.name && (
-              <p className="text-red-400 text-xs">{formErrors.name.message}</p>
-            )}
             <input
               type="email"
               placeholder="email"
@@ -151,7 +141,8 @@ const RegisterPage = () => {
           </form>
         </div>
       </div>
-    </section>
+</div>
+    </div>
   );
 };
 

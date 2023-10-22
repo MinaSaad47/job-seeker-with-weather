@@ -11,6 +11,7 @@ import express from "express";
 import "express-async-errors";
 import morgan from "morgan";
 
+
 import { Swagger } from "./configs/swagger";
 import { errorsMiddleware } from "./middlewares/errors.middlewar";
 import { authRouter } from "./resources/auth/auth.router";

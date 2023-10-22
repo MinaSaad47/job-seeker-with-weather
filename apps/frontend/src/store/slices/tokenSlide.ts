@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
+import api from "../apis/api";
 
 type TokenState = {
   token?: string;
@@ -21,11 +22,13 @@ const tokenSlice = createSlice({
       state.token = action.payload;
     },
     removeToken: (state) => {
+      api.util.invalidateTags(["Profile", "Weather"]);
       Cookies.remove("token");
       state.token = undefined;
     },
   },
 });
 
-export const { setToken, removeToken } = tokenSlice.actions;
+export const { removeToken, setToken } = tokenSlice.actions;
+
 export default tokenSlice;

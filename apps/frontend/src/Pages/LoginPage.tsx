@@ -13,6 +13,8 @@ import { useLoginMutation } from "../store";
 import { setToken } from "../store/slices/tokenSlide";
 import { ValidateLogin } from "../validations/auth.validation";
 
+import registrationBackground from "../assets/registration-background.jpg";
+
 const LoginPage = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
@@ -46,15 +48,16 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="p-5 lg:p-20 text-xs lg:text-sm h-screen w-screen bg-primary-400 flex items-center justify-center">
+    <div className="text-xs lg:text-sm h-screen w-screen bg-primary-400 flex items-center justify-center" style={{ background: `url(${registrationBackground})` }}>
+    <div className="p-5 lg:p-20 w-full h-full backdrop-blur-3xl backdrop-brightness-75">
       <div className="h-full w-full bg-white rounded-3xl flex flex-col lg:flex-row overflow-scroll">
         <div className="lg:block md:w-1/2 h-2/5 lg:h-full relative">
           <img
-            src="https://placehold.co/400"
+            src={registrationBackground}
             className="h-full w-full object-cover"
             alt=""
           />
-          <div className="absolute top-5 left-5 text-6xl text-primary">
+          <div className="absolute top-5 left-5 text-6xl text-white">
             Login
           </div>
         </div>
@@ -121,7 +124,8 @@ const LoginPage = () => {
           </form>
         </div>
       </div>
-    </section>
+</div>
+    </div>
   );
 };
 

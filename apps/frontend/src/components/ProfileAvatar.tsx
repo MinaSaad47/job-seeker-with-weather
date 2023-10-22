@@ -2,16 +2,16 @@ import { useState } from "react";
 import { CgLogOut, CgProfile } from "react-icons/cg";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { removeToken } from "../store/slices/tokenSlide";
+import { removeToken, useGetProfileQuery } from "../store";
 
 const ProfileAvatar = () => {
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { data } = useGetProfileQuery();
 
   const handleLogout = () => {
     dispatch(removeToken());
-    // navigate("/login", { replace: true });
   };
 
   const renderMenu = menu && (
@@ -39,9 +39,9 @@ const ProfileAvatar = () => {
   return (
     <div className="relative w-full h-full">
       <img
-        src="https://placehold.co/400"
+        src={data?.data?.picture ?? "https://placehold.co/400"}
         alt=""
-        className="cursor-pointer w-auto h-full object-cover rounded-[50%]"
+        className="cursor-pointer w-16 h-16 object-cover rounded-[50%]"
         onMouseEnter={() => setMenu(true)}
         onMouseLeave={() => setMenu(false)}
       />

@@ -1,8 +1,9 @@
 import { Middleware, isRejectedWithValue } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { removeToken } from "../slices/tokenSlide";
+import { removeToken } from "..";
+import api from "./api";
 
-const errorMiddleware: Middleware = (store) => (next) => (action) => {
+const errorMiddleware: Middleware = (_store) => (next) => (action) => {
   if (isRejectedWithValue(action)) {
     let message;
     if (action.payload.error) {
@@ -13,7 +14,7 @@ const errorMiddleware: Middleware = (store) => (next) => (action) => {
     } else if (action.payload.data) {
       message = action.payload.data.message;
       if (action.payload.status === 401) {
-        store.dispatch(removeToken());
+        _store.dispatch(removeToken());
       } else if (
         action.payload.status === 404 &&
         action.payload.data.code === "resource/profile-not-found"
@@ -22,6 +23,11 @@ const errorMiddleware: Middleware = (store) => (next) => (action) => {
       }
     }
     toast.error(message, { position: "bottom-center" });
+  } else if (action.type === removeToken.type) {
+    _store.dispatch(api.util.resetApiState());
+    toast.success("You have successfully logged out", {
+      position: "bottom-center",
+    });
   }
 
   return next(action);

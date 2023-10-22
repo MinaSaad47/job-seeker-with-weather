@@ -46,19 +46,12 @@ export const ValidateProfile = z
           { message: "invalid url" }
         )
     ),
-    address: z.object(
+    location: z.object(
       {
-        country: z
-          .string({ required_error: "country is required" })
-          .min(1, { message: "country must at least contains 1 characters" }),
-        region: z
-          .string({ required_error: "region is required" })
-          .min(1, { message: "region must at least contains 1 characters" }),
+        lat: z.number({ required_error: "lat is required" }),
+        lng: z.number({ required_error: "lng is required" }),
       },
-      {
-        invalid_type_error: "invalid address",
-        required_error: "address is required",
-      }
+      { required_error: "location is required" }
     ),
   })
   .openapi("ValidateProfile");

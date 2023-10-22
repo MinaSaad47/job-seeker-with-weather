@@ -28,7 +28,10 @@ const ContactDetails = () => {
     remove: removeLink,
   } = useFieldArray({ name: "socialLinks" });
 
-  console.log(emails);
+  const emailsErrors =
+    errors?.emails && (errors.emails?.message || errors?.emails?.root?.message);
+  const phonesErrors =
+    errors?.phones && (errors.phones?.message || errors?.phones?.root?.message);
 
   const renderEmails = emails.map((_item, index) => (
     <div className="flex flex-col gap-2" key={index}>
@@ -110,10 +113,8 @@ const ContactDetails = () => {
       <div className="flex flex-col xl:flex-row gap-4">
         <div className="flex flex-col gap-4 xl:w-1/2">
           <fieldset className="w-full">
-            {emails.length === 0 && (
-              <p className="text-center text-red-500">
-                {errors.emails?.message}
-              </p>
+            {emailsErrors && (
+              <p className="text-center text-red-500">{emailsErrors}</p>
             )}
             {renderEmails}
           </fieldset>
@@ -129,10 +130,8 @@ const ContactDetails = () => {
         <div className="invisible xl:visible xl:w-[2px] mx-[25%] xl:mx-0 border-dashed border-[2px] border-gray-500/40"></div>
         <div className="flex flex-col xl:w-1/2 gap-4">
           <fieldset>
-            {phones.length === 0 && (
-              <p className="text-center text-red-500">
-                {errors.phones?.message}
-              </p>
+            {phonesErrors && (
+              <p className="text-center text-red-500">{phonesErrors}</p>
             )}
             {renderPhones}
           </fieldset>

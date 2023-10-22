@@ -20,26 +20,9 @@ export const getCurretWeather: RequestHandler = async (req, res) => {
 
   const profile = doc.data() as z.infer<typeof ValidateProfile>;
 
-  if (!profile.address) {
-    return res.status(404).send({
-      status: "fail",
-      code: "resource/address-not-found",
-      message: "address not found",
-    });
-  }
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${profile.location.lat}&lon=${profile.location.lng}&appid=${process.env.OPEN_WEATHER_APPID}&units=metric`;
 
-  let options = {
-    method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather",
-    params: {
-      appid: process.env.OPEN_WEATHER_APPID,
-      units: "metric",
-      q: profile.address.region,
-    },
-    validateStatus: () => true,
-  };
-
-  const response = await axios.request({ ...options });
+  const response = await axios.get(url);
 
   if (response.status !== 200) {
     return res.status(404).send({
@@ -68,26 +51,9 @@ export const getForecats: RequestHandler = async (req, res) => {
 
   const profile = doc.data() as z.infer<typeof ValidateProfile>;
 
-  if (!profile.address) {
-    return res.status(404).send({
-      status: "fail",
-      code: "resource/address-not-found",
-      message: "address not found",
-    });
-  }
+  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${profile.location.lat}&lon=${profile.location.lng}&appid=${process.env.OPEN_WEATHER_APPID}&units=metric`;
 
-  let options = {
-    method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast",
-    params: {
-      appid: process.env.OPEN_WEATHER_APPID,
-      units: "metric",
-      q: profile.address.region,
-    },
-    validateStatus: () => true,
-  };
-
-  const response = await axios.request({ ...options });
+  const response = await axios.get(url, { validateStatus: (_) => true });
 
   if (response.status !== 200) {
     return res.status(404).send({

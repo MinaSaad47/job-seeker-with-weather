@@ -4,9 +4,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FaSave, FaUpload } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import AddressDetails from "../components/AddressDetails";
 import ContactDetails from "../components/ContactDetails";
 import EducationDetails from "../components/EducationDetails";
+import AddressDetails from "../components/LocationDetails";
 import PersnalDetails from "../components/PersnalDetails";
 import SkillsDetails from "../components/SkillsDetails";
 import Spinner from "../components/Spinner";
@@ -25,7 +25,6 @@ const ProfilePage = () => {
   const { data, isLoading } = useGetProfileQuery();
 
   useEffect(() => {
-    console.log(data);
     if (data && !isLoading) {
       form.reset(data.data);
     }
@@ -53,6 +52,20 @@ const ProfilePage = () => {
     if (file) {
       const payload = await uploadCv(file).unwrap();
       if (payload?.status === "success") {
+        if (payload.data?.parsed) {
+          for (const email of payload.data.parsed.emails ?? []) {
+            form.setValue("emails", [...form.getValues("emails"), email]);
+          }
+          for (const url of payload.data.parsed.urls ?? []) {
+            form.setValue("socialLinks", [
+              ...form.getValues("socialLinks"),
+              url,
+            ]);
+          }
+          for (const phone of payload.data.parsed.phones ?? []) {
+            form.setValue("phones", [...form.getValues("phones"), phone]);
+          }
+        }
         toast.success("You have successfully uploaded your CV", {
           position: "bottom-center",
         });
@@ -94,6 +107,7 @@ const ProfilePage = () => {
               )}
               <input
                 type="file"
+                accept=".pdf,.docs,.docx"
                 onChange={handleCVUpload as any}
                 id="cv"
                 className="hidden"

@@ -1,36 +1,29 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import authApi from "./apis/authApi";
+import api from "./apis/api";
 import errorMiddleware from "./apis/errorMiddleware";
-import profileApi from "./apis/profileApi";
-import weatherApi from "./apis/weatherApi";
-import tokenSlide from "./slices/tokenSlide";
+import tokenSlide, { removeToken, setToken } from "./slices/tokenSlide";
 
 const store = configureStore({
   reducer: {
-    [authApi.reducerPath]: authApi.reducer,
-    [profileApi.reducerPath]: profileApi.reducer,
-    [weatherApi.reducerPath]: weatherApi.reducer,
+    [api.reducerPath]: api.reducer,
     token: tokenSlide.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    [
-      ...getDefaultMiddleware()
-        .concat(errorMiddleware)
-        .concat(authApi.middleware)
-        .concat(profileApi.middleware)
-        .concat(weatherApi.middleware),
-    ] as any,
+    getDefaultMiddleware().concat(errorMiddleware).concat(api.middleware),
 });
 
 setupListeners(store.dispatch);
 
 export default store;
-
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export { setToken, removeToken };
 export const {
+  useLoginMutation,
+  useRegisterMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,
+  useUploadPictureMutation,
   useUploadCvMutation,
-} = profileApi;
-export const { useGetCurretWeatherQuery, useGetForecatsQuery } = weatherApi;
+  useGetCurretWeatherQuery,
+  useGetForecatsQuery,
+} = api;
