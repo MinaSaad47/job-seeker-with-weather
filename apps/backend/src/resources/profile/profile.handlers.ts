@@ -72,7 +72,7 @@ export const uploadCV: RequestHandler = async (req, res) => {
     {
       cv: cvUrl,
     },
-    { merge: false }
+    { merge: true }
   );
 
   let parsed;
@@ -111,7 +111,7 @@ export const uploadPicture: RequestHandler = async (req, res) => {
     {
       picture: pictureUrl,
     },
-    { merge: false }
+    { merge: true }
   );
 
   res.status(200).json({
