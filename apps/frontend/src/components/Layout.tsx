@@ -13,7 +13,7 @@ const Layout = () => {
     return <LoadingPage />;
   } else if (error && (error as any).status === 404) {
     toast.warning("you need to complete your profile before proceeding", { position: "bottom-center" });
-    navigate("/profile");
+    navigate("/profile", {state: "new"});
   }
 
   return (

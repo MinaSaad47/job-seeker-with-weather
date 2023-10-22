@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FaSave, FaUpload } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import ContactDetails from "../components/ContactDetails";
@@ -21,7 +22,8 @@ const ProfilePage = () => {
   const form = useForm<z.infer<typeof ValidateProfile>>({
     resolver: zodResolver(ValidateProfile),
   });
-
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const { data, isLoading } = useGetProfileQuery();
 
   useEffect(() => {
@@ -40,6 +42,9 @@ const ProfilePage = () => {
       toast.success("You have successfully updated your profile", {
         position: "bottom-center",
       });
+      if (state === "new") {
+        navigate("/", { replace: true });
+      }
     } else {
       toast.error(payload.data.message, { position: "bottom-center" });
     }
