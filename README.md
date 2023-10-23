@@ -33,4 +33,4 @@
 
 - implementing location picker
 - wasted time implementing un-reliable forcast retrieval using country and city (openweathermap data mismatch)
-- spitting the editing form into multiple components without passing callbacks (solved using [react form hock](https://react-hook-form.com/))
+- spitting the editing form into multiple components without passing callbacks (solved using [react form hook](https://react-hook-form.com/))
