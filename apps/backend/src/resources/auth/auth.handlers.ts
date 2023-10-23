@@ -19,34 +19,6 @@ export const login: RequestHandler<
   });
 };
 
-export const getSession: RequestHandler = async (req, res) => {
-  const token = req.headers.authorization?.split("Bearer ")[1];
-
-  if (!token) {
-    return res.status(401).send({
-      status: "fail",
-      code: "auth/missing-jwt-token",
-      message: "unauthorized",
-    });
-  }
-
-  await FBAdmin.auth().verifyIdToken(token);
-
-  const expiresIn = 1000 * 60 * 60 * 24;
-
-  const sessionCookies = FBAdmin.auth().createSessionCookie(token, {
-    expiresIn,
-  });
-
-  res.cookie("session", sessionCookies, {
-    maxAge: expiresIn,
-    httpOnly: true,
-    secure: true,
-  });
-
-  res.json({ status: "success" });
-};
-
 export const register: RequestHandler<
   {},
   {},
